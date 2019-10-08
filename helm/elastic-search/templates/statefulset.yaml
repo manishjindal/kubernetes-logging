@@ -7,8 +7,7 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "elastic-search.name" . }}
-      release: {{ .Release.Name }}
+      app: {{ template "elastic-search.fullname" . }}
   template:
     metadata:
       labels:
