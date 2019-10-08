@@ -11,7 +11,7 @@ image:
 
 service:
   rest: 9200
-  inter-node: 9300
+  inter_node: 9300
 
 ingress:
   enabled: false
