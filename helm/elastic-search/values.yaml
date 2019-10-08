@@ -10,6 +10,7 @@ image:
   pullPolicy: IfNotPresent
 
 service:
+  type: NodePort
   rest: 9200
   inter_node: 9300
 
