@@ -70,7 +70,6 @@ spec:
             app: elasticsearch
         spec:
           accessModes: [ "ReadWriteOnce" ]
-          storageClassName: ""
           resources:
             requests:
               storage: 5Gi
