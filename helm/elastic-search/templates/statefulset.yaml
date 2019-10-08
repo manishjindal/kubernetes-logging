@@ -30,7 +30,8 @@ spec:
               protocol: TCP
           volumeMounts:
             - name: data
-              mountPath: /usr/share/elasticsearch/data
+              persistentVolumeClaim:
+                claimName: data
           env:
             - name: cluster.name
               value: k8s-logs
@@ -52,7 +53,8 @@ spec:
             privileged: true
           volumeMounts:
             - name: data
-              mountPath: /usr/share/elasticsearch/data
+              persistentVolumeClaim:
+                claimName: data-pvc
         - name: increase-vm-max-map
           image: busybox
           command: ["sysctl", "-w", "vm.max_map_count=262144"]
@@ -63,13 +65,3 @@ spec:
           command: ["sh", "-c", "ulimit -n 65536"]
           securityContext:
             privileged: true
-    volumeClaimTemplates:
-      - metadata:
-          name: data
-          labels:
-            app: elasticsearch
-        spec:
-          accessModes: [ "ReadWriteOnce" ]
-          resources:
-            requests:
-              storage: 5Gi
