@@ -27,7 +27,7 @@ spec:
              - containerPort: 5601
           env:
             - name: ELASTICSEARCH_URL
-              value: http://elasticsearch:9200
+              value: http://167.71.228.14:30224
           resources:
       {{ toYaml .Values.resources | indent 12 }}
       {{- with .Values.nodeSelector }}
