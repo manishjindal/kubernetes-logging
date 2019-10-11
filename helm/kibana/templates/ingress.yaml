@@ -1,13 +1,13 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "kibana.fullname" . -}}
+{{- $fullName := include "fullname" . -}}
+{{- $servicePort := .Values.service.port -}}
 {{- $ingressPath := .Values.ingress.path -}}
-apiVersion: extensions/v1beta1
+apiVersion: {{ template "kibana.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    app: {{ template "kibana.name" . }}
-    chart: {{ template "kibana.chart" . }}
+    app: {{ .Chart.Name }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 {{- with .Values.ingress.annotations }}
@@ -17,13 +17,7 @@ metadata:
 spec:
 {{- if .Values.ingress.tls }}
   tls:
-  {{- range .Values.ingress.tls }}
-    - hosts:
-      {{- range .hosts }}
-        - {{ . }}
-      {{- end }}
-      secretName: {{ .secretName }}
-  {{- end }}
+{{ toYaml .Values.ingress.tls | indent 4 }}
 {{- end }}
   rules:
   {{- range .Values.ingress.hosts }}
@@ -33,6 +27,6 @@ spec:
           - path: {{ $ingressPath }}
             backend:
               serviceName: {{ $fullName }}
-              servicePort: http
+              servicePort: {{ $servicePort }}
   {{- end }}
 {{- end }}
